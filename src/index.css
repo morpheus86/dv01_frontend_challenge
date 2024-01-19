@@ -28,3 +28,15 @@ td {
   margin: 20px;
   border: 1px solid black;
 }
+
+.dropDown_container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 1rem;
+  margin: 20px;
+}
+
+select {
+  padding: 10px;
+  border-radius: 5px;
+}
