@@ -1,13 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getData } from "../request/api";
 import { UIActions } from "./uiSlice";
-import { getGroupByFeature, getAggregateTotal } from "../utilities/functions";
+import {
+  getGroupByFeature,
+  getAggregateTotal,
+  getAggregateTotalByFilterRequirements,
+  getAllGroups,
+} from "../utilities/functions";
 
 // this will be our initial state for this particular slice of state which will contain our data array and aggregateTotal arr
 const dataInitialState = {
   datas: [],
   aggregateTotal: [],
   gradeGroups: [],
+  groups: [],
 };
 
 export const dataSlice = createSlice({
@@ -19,10 +25,21 @@ export const dataSlice = createSlice({
       // I am getting these function from my utility file to modify / update state
       const allGroups = getGroupByFeature(action.payload.datas);
       const getAggregate = getAggregateTotal(allGroups, action.payload.datas);
+      const getGroups = getAllGroups(action.payload.datas);
 
       state.datas = action.payload.datas;
       state.aggregateTotal = getAggregate;
       state.gradeGroups = allGroups;
+      state.groups = getGroups;
+    },
+    filterData(state, action) {
+      // This function will receive an object of requirement through action.payload to be filtered against
+      const aggregateFilter = getAggregateTotalByFilterRequirements(
+        state.gradeGroups,
+        action.payload,
+        state.datas
+      );
+      state.aggregateTotal = aggregateFilter;
     },
   },
 });
@@ -41,7 +58,6 @@ export const getAllDatas = () => async (dispatch) => {
   );
   try {
     const response = await getData();
-    console.log("response :>> ", response);
     dispatch(
       UIActions.fireNotification({
         message: "Success getting data",

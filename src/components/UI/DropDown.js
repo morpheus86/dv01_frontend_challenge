@@ -1,6 +1,9 @@
-const DropDown = ({ title, options }) => {
+import React, { forwardRef } from "react";
+
+// ForwardRef hook let me access the ref passed to the dropDown component in DropDownFilter
+const DropDown = forwardRef(({ title, options, option }, ref) => {
   return (
-    <select name={title}>
+    <select name={title} ref={ref} onChange={option}>
       <option defaultValue={title}>{title}</option>
       {options &&
         options.map((val) => {
@@ -12,6 +15,6 @@ const DropDown = ({ title, options }) => {
         })}
     </select>
   );
-};
+});
 
 export default DropDown;
