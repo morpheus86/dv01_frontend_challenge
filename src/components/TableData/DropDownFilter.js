@@ -3,6 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { dataActions, getAllDatas } from "../../store/dataSlice";
 import DropDown from "../UI/DropDown";
 
+/**
+ *
+ * 2. Build four dropdowns for home ownership, quarter, term and year that will filter out the data and be reflected onto the table. Each dropdown will have unique values that you will need to generate from the data.
+ * 3.Create a reset button that resets the data and filter.
+ */
 const DropDownFilter = () => {
   const { groups } = useSelector((state) => state.data);
   const { homeOwnership, term, quarter, year } = groups;
