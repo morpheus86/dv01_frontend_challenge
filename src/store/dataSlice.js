@@ -7,6 +7,7 @@ import { getGroupByFeature, getAggregateTotal } from "../utilities/functions";
 const dataInitialState = {
   datas: [],
   aggregateTotal: [],
+  gradeGroups: [],
 };
 
 export const dataSlice = createSlice({
@@ -16,11 +17,12 @@ export const dataSlice = createSlice({
     getDatas(state, action) {
       // this fncion is dispatched in our thunk and will receive the data through action.payload
       // I am getting these function from my utility file to modify / update state
-      console.log("action.payload :>> ", action);
-      const allGroups = getGroupByFeature(action.payload.data);
-      const getAggregate = getAggregateTotal(allGroups, action.payload.data);
+      const allGroups = getGroupByFeature(action.payload.datas);
+      const getAggregate = getAggregateTotal(allGroups, action.payload.datas);
+
       state.datas = action.payload.datas;
       state.aggregateTotal = getAggregate;
+      state.gradeGroups = allGroups;
     },
   },
 });
@@ -39,7 +41,7 @@ export const getAllDatas = () => async (dispatch) => {
   );
   try {
     const response = await getData();
-
+    console.log("response :>> ", response);
     dispatch(
       UIActions.fireNotification({
         message: "Success getting data",
@@ -47,7 +49,7 @@ export const getAllDatas = () => async (dispatch) => {
         title: "Success",
       })
     );
-    console.log("response :>> ", response);
+
     dispatch(
       dataActions.getDatas({
         datas: response,
