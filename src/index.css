@@ -6,4 +6,25 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+}
+
+.container {
+  margin: 20px auto;
+  max-width: 900px;
+  padding: 20px;
+}
+p {
+  text-align: center;
+  font-weight: bold;
+}
+table {
+  margin: 12rem auto;
+}
+
+thead tr th,
+td {
+  padding: 20px;
+  margin: 20px;
+  border: 1px solid black;
 }
