@@ -1,10 +1,16 @@
 // useSelector hook let us access our state at anytime and we always get the latest state
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import "./App.css";
+import { getAllDatas } from "./store/dataSlice";
 
 const App = () => {
-  const state = useSelector((state) => state.data.datas);
-  console.log("state :>> ", state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllDatas());
+  }, [dispatch]);
+
   return (
     <div className="App">
       <p>HELLO WORLD</p>
