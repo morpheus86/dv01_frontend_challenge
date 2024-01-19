@@ -71,3 +71,13 @@ export const getAllGroups = (datas) => {
   }
   return group;
 };
+
+export const chartData = (aggregateTotal) => {
+  return aggregateTotal.map(
+    (agg, idx) =>
+      (agg = {
+        grade: idx + 1,
+        totalByGrade: agg.toFixed(2),
+      })
+  );
+};

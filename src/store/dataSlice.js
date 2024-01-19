@@ -6,6 +6,7 @@ import {
   getAggregateTotal,
   getAggregateTotalByFilterRequirements,
   getAllGroups,
+  chartData,
 } from "../utilities/functions";
 
 // this will be our initial state for this particular slice of state which will contain our data array and aggregateTotal arr
@@ -14,6 +15,7 @@ const dataInitialState = {
   aggregateTotal: [],
   gradeGroups: [],
   groups: [],
+  chartData: [],
 };
 
 export const dataSlice = createSlice({
@@ -26,11 +28,13 @@ export const dataSlice = createSlice({
       const allGroups = getGroupByFeature(action.payload.datas);
       const getAggregate = getAggregateTotal(allGroups, action.payload.datas);
       const getGroups = getAllGroups(action.payload.datas);
+      const chart = chartData(getAggregate);
 
       state.datas = action.payload.datas;
       state.aggregateTotal = getAggregate;
       state.gradeGroups = allGroups;
       state.groups = getGroups;
+      state.chartData = chart;
     },
     filterData(state, action) {
       // This function will receive an object of requirement through action.payload to be filtered against
@@ -40,6 +44,7 @@ export const dataSlice = createSlice({
         state.datas
       );
       state.aggregateTotal = aggregateFilter;
+      state.chartData = chartData(aggregateFilter);
     },
   },
 });
